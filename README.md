@@ -26,7 +26,7 @@ go run main.go
 
 The example:
 
-1. Starts a Docker container - `dynamodblocal.Run(ctx)`
+1. Starts a Docker container - `dynamodblocal.Run(ctx, "amazon/dynamodb-local:2.2.1")`
 2. Registers a function (defer) to terminate it at the end of the program - `dynamodbLocalContainer.Terminate(ctx)`
 3. Gets the client handle for the DynamoDB (local) instance - `dynamodbLocalContainer.GetDynamoDBClient(context.Background())`
 4. Uses the client handle to execute operations. In this case - create a table, add an item, query that item.
