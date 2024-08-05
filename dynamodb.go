@@ -24,10 +24,16 @@ const (
 	containerName = "dynamodb_local"
 )
 
+// Deprecated: Use Run instead
 // RunContainer creates an instance of the dynamodb container type
 func RunContainer(ctx context.Context, opts ...testcontainers.ContainerCustomizer) (*DynamodbLocalContainer, error) {
+	return Run(ctx, image, opts...)
+}
+
+// Run creates an instance of the dynamodb container type
+func Run(ctx context.Context, img string, opts ...testcontainers.ContainerCustomizer) (*DynamodbLocalContainer, error) {
 	req := testcontainers.ContainerRequest{
-		Image:        image,
+		Image:        img,
 		ExposedPorts: []string{string(port)},
 		WaitingFor:   wait.ForListeningPort(port),
 	}
