@@ -26,7 +26,7 @@ go run main.go
 
 The example:
 
-1. Starts a Docker container - `dynamodblocal.RunContainer(ctx)`
+1. Starts a Docker container - `dynamodblocal.Run(ctx)`
 2. Registers a function (defer) to terminate it at the end of the program - `dynamodbLocalContainer.Terminate(ctx)`
 3. Gets the client handle for the DynamoDB (local) instance - `dynamodbLocalContainer.GetDynamoDBClient(context.Background())`
 4. Uses the client handle to execute operations. In this case - create a table, add an item, query that item.
@@ -55,7 +55,7 @@ func main() {
 
 	ctx := context.Background()
 
-	dynamodbLocalContainer, err := dynamodblocal.RunContainer(ctx)
+	dynamodbLocalContainer, err := dynamodblocal.Run(ctx, "amazon/dynamodb-local:2.2.1")
 	if err != nil {
 		log.Fatalf("failed to start container: %s", err)
 	}
@@ -170,16 +170,16 @@ The following configuration parameters are supported: `WithSharedDB` and `WithTe
 
 **WithSharedDB**
 
-```
-container, err := dynamodblocal.RunContainer(ctx, WithSharedDB())
+```go
+container, err := dynamodblocal.Run(ctx, "amazon/dynamodb-local:2.2.1", WithSharedDB())
 ```
 
 If you use this option, DynamoDB creates a shared database file in which data is stored. This is useful if you want to persist data for e.g. between successive test executions. See [TestIntegrationWithSharedDB in dynamodb_test.go](dynamodb_test.go) for reference.
 
 **WithTelemetryDisabled**
 
-```
-container, err := dynamodblocal.RunContainer(ctx, WithTelemetryDisabled())
+```go
+container, err := dynamodblocal.Run(ctx, "amazon/dynamodb-local:2.2.1", WithTelemetryDisabled())
 ```
 
 When specified, DynamoDB local will not send any telemetry.
@@ -187,5 +187,5 @@ When specified, DynamoDB local will not send any telemetry.
 To use these options together:
 
 ```go
-container, err := dynamodblocal.RunContainer(ctx, WithSharedDB(), WithTelemetryDisabled())
+container, err := dynamodblocal.Run(ctx, "amazon/dynamodb-local:2.2.1", WithSharedDB(), WithTelemetryDisabled())
 ```

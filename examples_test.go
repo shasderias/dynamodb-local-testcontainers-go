@@ -8,10 +8,10 @@ import (
 	dynamodblocal "github.com/abhirockzz/dynamodb-local-testcontainers-go"
 )
 
-func ExampleRunContainer() {
+func ExampleRun() {
 	ctx := context.Background()
 
-	dynamodbContainer, err := dynamodblocal.RunContainer(ctx)
+	dynamodbContainer, err := dynamodblocal.Run(ctx, "amazon/dynamodb-local:2.2.1")
 	if err != nil {
 		log.Fatalf("failed to start container: %s", err)
 	}
