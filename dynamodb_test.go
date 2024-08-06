@@ -14,12 +14,18 @@ import (
 const (
 	tableName    = "demo_table"
 	pkColumnName = "demo_pk"
+	baseImage    = "amazon/dynamodb-local:"
+)
+
+var (
+	image2_2_1   string = baseImage + "2.2.1"
+	imageInvalid string = baseImage + "0.0.7"
 )
 
 func TestIntegration(t *testing.T) {
 	ctx := context.Background()
 
-	container, err := Run(ctx, "amazon/dynamodb-local:2.2.1")
+	container, err := Run(ctx, image2_2_1)
 	require.NoError(t, err)
 
 	// Clean up the container after the test is complete
@@ -71,14 +77,14 @@ func TestIntegrationWithCustomImageVersion(t *testing.T) {
 func TestIntegrationWithInvalidCustomImageVersion(t *testing.T) {
 	ctx := context.Background()
 
-	_, err := Run(ctx, "amazon/dynamodb-local:0.0.7")
+	_, err := Run(ctx, imageInvalid)
 	require.Error(t, err)
 }
 
 func TestIntegrationWithoutEndpointResolver(t *testing.T) {
 	ctx := context.Background()
 
-	container, err := Run(ctx, "amazon/dynamodb-local:2.2.1")
+	container, err := Run(ctx, image2_2_1)
 	require.NoError(t, err, "container should start successfully")
 
 	// clean up the container after the test completion
@@ -98,7 +104,7 @@ func TestIntegrationWithoutEndpointResolver(t *testing.T) {
 func TestIntegrationWithSharedDB(t *testing.T) {
 	ctx := context.Background()
 
-	container, err := Run(ctx, "amazon/dynamodb-local:2.2.1", WithSharedDB())
+	container, err := Run(ctx, image2_2_1, WithSharedDB())
 	require.NoError(t, err)
 
 	// Clean up the container after the test is complete
@@ -155,7 +161,7 @@ func TestIntegrationWithSharedDB(t *testing.T) {
 func TestIntegrationWithoutSharedDB(t *testing.T) {
 	ctx := context.Background()
 
-	container, err := Run(ctx, "amazon/dynamodb-local:2.2.1")
+	container, err := Run(ctx, image2_2_1)
 	require.NoError(t, err)
 
 	// Clean up the container after the test is complete
@@ -200,7 +206,7 @@ func TestIntegrationWithoutSharedDB(t *testing.T) {
 func TestContainerShouldStartWithTelemetryDisabled(t *testing.T) {
 	ctx := context.Background()
 
-	container, err := Run(ctx, "amazon/dynamodb-local:2.2.1", WithTelemetryDisabled())
+	container, err := Run(ctx, image2_2_1, WithTelemetryDisabled())
 	require.NoError(t, err)
 
 	// Clean up the container after the test is complete
@@ -215,7 +221,7 @@ func TestContainerShouldStartWithTelemetryDisabled(t *testing.T) {
 func TestContainerShouldStartWithSharedDBEnabledAndTelemetryDisabled(t *testing.T) {
 	ctx := context.Background()
 
-	container, err := Run(ctx, "amazon/dynamodb-local:2.2.1", WithSharedDB(), WithTelemetryDisabled())
+	container, err := Run(ctx, image2_2_1, WithSharedDB(), WithTelemetryDisabled())
 	require.NoError(t, err)
 
 	// Clean up the container after the test is complete
