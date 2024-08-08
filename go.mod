@@ -1,4 +1,4 @@
-module github.com/abhirockzz/dynamodb-local-testcontainers-go
+module github.com/shasderias/dynamodb-local-testcontainers-go
 
 go 1.21
 

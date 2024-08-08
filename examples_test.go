@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	dynamodblocal "github.com/abhirockzz/dynamodb-local-testcontainers-go"
+	dynamodblocal "github.com/shasderias/dynamodb-local-testcontainers-go"
 )
 
 func ExampleRun() {
